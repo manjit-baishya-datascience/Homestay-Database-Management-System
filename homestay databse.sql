@@ -16,6 +16,9 @@ CREATE TABLE Listings (
     Amenities VARCHAR(255) NOT NULL,
     Rating INT NOT NULL,
     Reviews INT NOT NULL,
+    INDEX idx_city (City),
+    INDEX idx_checkin_date (CheckInDate),
+    INDEX idx_checkout_date (CheckOutDate),
     
     FOREIGN KEY (HostID) REFERENCES Hosts(HostID)
 );
@@ -30,17 +33,18 @@ CREATE TABLE Guests (
     DateJoined DATE NOT NULL,
     TotalBookings INT NOT NULL,
     Ratings INT NOT NULL,
-    Reviews INT NOT NULL,
+    Reviews INT NOT NULL
 );
 
 CREATE TABLE GuestReviews (
-    HostID INT PRIMARY KEY NOT NULL,
-    GuestID INT PRIMARY KEY NOT NULL,
+    HostID INT NOT NULL,
+    GuestID INT NOT NULL,
     Rating INT NOT NULL,
-    Review TEXT
-
-    FOREIGN KEY (GuestID) REFERENCES Guests(GuestID)
-    FOREIGN KEY (HostID) REFERENCES Hosts(HostID)
+    Review TEXT,
+    
+    FOREIGN KEY (GuestID) REFERENCES Guests(GuestID),
+    FOREIGN KEY (HostID) REFERENCES Hosts(HostID),
+    PRIMARY KEY (HostID, GuestID)
 );
 
 CREATE TABLE Hosts (
@@ -54,7 +58,7 @@ CREATE TABLE Hosts (
     TotalListings INT NOT NULL,
     TotalBookings INT NOT NULL,
     Ratings INT NOT NULL,
-    Reviews INT NOT NULL,
+    Reviews INT NOT NULL
 );
 
 CREATE TABLE Bookings (
@@ -73,18 +77,10 @@ CREATE TABLE Bookings (
     HostReview TEXT,
     HostRating INT,
     GuestReview TEXT,
-    GuestRating INT
-    
+    GuestRating INT,
+
     FOREIGN KEY (GuestID) REFERENCES Guests(GuestID),
-    FOREIGN KEY (ListingID) REFERENCES Listings(ListingID)
-    FOREIGN KEY (HostID) REFERENCES Hosts(HostID)
-);
-
-CREATE TABLE Ownership (
-    ListingID INT PRIMARY KEY NOT NULL,
-    HostID INT PRIMARY KEY NOT NULL,
-
-    FOREIGN KEY (ListingID) REFERENCES Listings(ListingID)
+    FOREIGN KEY (ListingID) REFERENCES Listings(ListingID),
     FOREIGN KEY (HostID) REFERENCES Hosts(HostID)
 );
 
@@ -96,7 +92,7 @@ CREATE TABLE Amenities (
 CREATE TABLE ListingAmenities (
     ListingID INT,
     AmenityID INT,
-    
+
     FOREIGN KEY (ListingID) REFERENCES Listings(ListingID),
     FOREIGN KEY (AmenityID) REFERENCES Amenities(AmenityID)
 );

@@ -1,0 +1,82 @@
+Table Listings {
+    ListingID int[pk, increment]
+    HostID int[ref: > Hosts.HostID]
+    Title varchar[100] [not null]
+    Description text
+    Address varchar[255] [not null]
+    City varchar[100] [not null]
+    State varchar[100] [not null]
+    Country varchar[100] [not null]
+    Latitude decimal[10, 8]
+    Longitude decimal[11, 8]
+    Price decimal[10, 2] [not null]
+    MaxGuests int[not null]
+    Beds int[not null]
+    Baths int[not null] 
+    Amenities varchar[255] [not null]
+    Rating int[not null]
+    Reviews int[not null]
+}
+
+Table Guests {
+    GuestID int[pk, increment]
+    GuestName varchar[50] [not null]
+    Email varchar[100] [unique, not null]
+    Password varchar[100] [not null]
+    PhoneNumber varchar[20]
+    ProfilePicture varchar[255]
+    DateJoined date[not null]
+    TotalBookings int[not null]
+    Ratings int[not null]
+    Reviews int[not null]
+}
+
+Table GuestReviews {
+    HostID int[ref: > Hosts.HostID]
+    GuestID int[ref: > Guests.GuestID]
+    Rating int[not null]
+    Review text
+}
+
+Table Hosts {
+    HostID int[pk]
+    HostName varchar[50] [not null]
+    Email varchar[100] [unique, not null]
+    Password varchar[100] [not null]
+    PhoneNumber varchar[20]
+    ProfilePicture varchar[255]
+    DateJoined DATE [not null]
+    TotalListings int[not null]
+    TotalBookings int[not null]
+    Ratings int[not null]
+    Reviews int[not null]
+}
+
+Table Bookings {
+    BookingID int[pk, increment]
+    GuestID int[ref: > Guests.GuestID]
+    ListingID int[ref: > Listings.ListingID]
+    HostID int[ref: > Hosts.HostID]
+    CheckInDate DATE [not null]
+    CheckOutDate DATE [not null]
+    TotalPrice decimal[10, 2] [not null]
+    NumGuests int[not null]
+    IsConfirmed BOOLEAN
+    Rating int[default: 0]
+    ListingReview text
+    ListingRating int
+    HostReview text
+    HostRating int
+    GuestReview text
+    GuestRating int
+}
+
+Table Amenities {
+    AmenityID int
+    Name varchar[100] [not null]
+}
+
+Table ListingAmenities {
+    ListingID int[ref: > Listings.ListingID]
+    AmenityID int[ref: > Amenities.AmenityID]
+}
