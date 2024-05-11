@@ -1,6 +1,6 @@
 # **Homestay - Databse Management System** 🏡📅
 
-![Header](/assets/Header.png)
+![Header](/assets/header.png)
 
 This Accommodation Booking System is designed to facilitate the booking and management of listings, guests, hosts, bookings, amenities, and reviews. It provides a comprehensive solution for users to find and book accommodations while also allowing hosts to manage their listings and interact with guests. 🛌✨
 
